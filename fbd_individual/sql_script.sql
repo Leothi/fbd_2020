@@ -1,0 +1,204 @@
+-- -----------------------------------------------------
+-- Schema acidentes_db
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `acidentes_db` ;
+USE `acidentes_db` ;
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`UF`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`UF` (
+  `ID_UF` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(8) NOT NULL,
+  PRIMARY KEY (`ID_UF`),
+  UNIQUE INDEX `ID_UF_UNIQUE` (`ID_UF` ASC),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`MUNICIPIO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`MUNICIPIO` (
+  `ID_MUNICIPIO` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(64) NOT NULL,
+  PRIMARY KEY (`ID_MUNICIPIO`),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC),
+  UNIQUE INDEX `ID_MUNICIPIO_UNIQUE` (`ID_MUNICIPIO` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`CAUSA_ACIDENTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`CAUSA_ACIDENTE` (
+  `ID_CAUSA_ACIDENTE` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(256) NOT NULL,
+  PRIMARY KEY (`ID_CAUSA_ACIDENTE`),
+  UNIQUE INDEX `ID_CAUSA_ACIDENTE_UNIQUE` (`ID_CAUSA_ACIDENTE` ASC),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`TIPO_ACIDENTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`TIPO_ACIDENTE` (
+  `ID_TIPO_ACIDENTE` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(64) NOT NULL,
+  PRIMARY KEY (`ID_TIPO_ACIDENTE`),
+  UNIQUE INDEX `ID_TIPO_ACIDENTE_UNIQUE` (`ID_TIPO_ACIDENTE` ASC),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`CLF_ACIDENTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`CLF_ACIDENTE` (
+  `ID_CLF_ACIDENTE` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(32) NOT NULL,
+  PRIMARY KEY (`ID_CLF_ACIDENTE`),
+  UNIQUE INDEX `ID_CLF_ACIDENTE_UNIQUE` (`ID_CLF_ACIDENTE` ASC),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`FASE_DIA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`FASE_DIA` (
+  `ID_FASE_DIA` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(32) NOT NULL,
+  PRIMARY KEY (`ID_FASE_DIA`),
+  UNIQUE INDEX `ID_FASE_DIA_UNIQUE` (`ID_FASE_DIA` ASC),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`SENTIDO_VIA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`SENTIDO_VIA` (
+  `ID_SENTIDO_VIA` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(32) NOT NULL,
+  PRIMARY KEY (`ID_SENTIDO_VIA`),
+  UNIQUE INDEX `ID_SENTIDO_VIA_UNIQUE` (`ID_SENTIDO_VIA` ASC),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`COND_METEREOLOGICA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`COND_METEREOLOGICA` (
+  `ID_COND_METEREOLOGICA` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(32) NOT NULL,
+  PRIMARY KEY (`ID_COND_METEREOLOGICA`),
+  UNIQUE INDEX `ID_COND_METEREOLOGICA_UNIQUE` (`ID_COND_METEREOLOGICA` ASC),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`TIPO_PISTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`TIPO_PISTA` (
+  `ID_TIPO_PISTA` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(32) NOT NULL,
+  PRIMARY KEY (`ID_TIPO_PISTA`),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC),
+  UNIQUE INDEX `ID_TIPO_PISTA_UNIQUE` (`ID_TIPO_PISTA` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`TRACADO_VIA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`TRACADO_VIA` (
+  `ID_TRACADO_VIA` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(32) NOT NULL,
+  PRIMARY KEY (`ID_TRACADO_VIA`),
+  UNIQUE INDEX `NOME_UNIQUE` (`NOME` ASC),
+  UNIQUE INDEX `ID_TRACADO_VIA_UNIQUE` (`ID_TRACADO_VIA` ASC));
+
+
+-- -----------------------------------------------------
+-- Table `acidentes_db`.`ACIDENTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acidentes_db`.`ACIDENTE` (
+  `ID_ACIDENTE` INT NOT NULL AUTO_INCREMENT,
+  `BR` INT NOT NULL,
+  `KM` FLOAT NOT NULL,
+  `NUM_PESSOAS` INT NOT NULL,
+  `NUM_MORTOS` INT NOT NULL,
+  `NUM_FERIDOS_LEVES` INT NOT NULL,
+  `NUM_FERIDOS_GRAVES` INT NOT NULL,
+  `NUM_ILESOS` INT NOT NULL,
+  `NUM_IGNORADOS` INT NOT NULL,
+  `NUM_FERIDOS` INT NOT NULL,
+  `NUM_VEICULOS` INT NOT NULL,
+  `DATA` DATETIME NOT NULL,
+  `ID_MUNICIPIO` INT NOT NULL,
+  `ID_TRACADO_VIA` INT NOT NULL,
+  `ID_CAUSA_ACIDENTE` INT NOT NULL,
+  `ID_FASE_DIA` INT NOT NULL,
+  `ID_COND_METEREOLOGICA` INT NOT NULL,
+  `ID_UF` INT NOT NULL,
+  `ID_TIPO_PISTA` INT NOT NULL,
+  `ID_CLF_ACIDENTE` INT NOT NULL,
+  `ID_SENTIDO_VIA` INT NOT NULL,
+  `ID_TIPO_ACIDENTE` INT NOT NULL,
+  PRIMARY KEY (`ID_ACIDENTE`),
+  UNIQUE INDEX `ID_ACIDENTE_UNIQUE` (`ID_ACIDENTE` ASC),
+  INDEX `fk_ACIDENTE_MUNICIPIO_idx` (`ID_MUNICIPIO` ASC),
+  INDEX `fk_ACIDENTE_TRACADO_VIA1_idx` (`ID_TRACADO_VIA` ASC),
+  INDEX `fk_ACIDENTE_CAUSA_ACIDENTE1_idx` (`ID_CAUSA_ACIDENTE` ASC),
+  INDEX `fk_ACIDENTE_FASE_DIA1_idx` (`ID_FASE_DIA` ASC),
+  INDEX `fk_ACIDENTE_COND_METEREOLOGICA1_idx` (`ID_COND_METEREOLOGICA` ASC),
+  INDEX `fk_ACIDENTE_UF1_idx` (`ID_UF` ASC),
+  INDEX `fk_ACIDENTE_TIPO_PISTA1_idx` (`ID_TIPO_PISTA` ASC),
+  INDEX `fk_ACIDENTE_CLF_ACIDENTE1_idx` (`ID_CLF_ACIDENTE` ASC),
+  INDEX `fk_ACIDENTE_SENTIDO_VIA1_idx` (`ID_SENTIDO_VIA` ASC),
+  INDEX `fk_ACIDENTE_TIPO_ACIDENTE1_idx` (`ID_TIPO_ACIDENTE` ASC),
+  CONSTRAINT `fk_ACIDENTE_MUNICIPIO`
+    FOREIGN KEY (`ID_MUNICIPIO`)
+    REFERENCES `acidentes_db`.`MUNICIPIO` (`ID_MUNICIPIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_TRACADO_VIA1`
+    FOREIGN KEY (`ID_TRACADO_VIA`)
+    REFERENCES `acidentes_db`.`TRACADO_VIA` (`ID_TRACADO_VIA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_CAUSA_ACIDENTE1`
+    FOREIGN KEY (`ID_CAUSA_ACIDENTE`)
+    REFERENCES `acidentes_db`.`CAUSA_ACIDENTE` (`ID_CAUSA_ACIDENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_FASE_DIA1`
+    FOREIGN KEY (`ID_FASE_DIA`)
+    REFERENCES `acidentes_db`.`FASE_DIA` (`ID_FASE_DIA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_COND_METEREOLOGICA1`
+    FOREIGN KEY (`ID_COND_METEREOLOGICA`)
+    REFERENCES `acidentes_db`.`COND_METEREOLOGICA` (`ID_COND_METEREOLOGICA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_UF1`
+    FOREIGN KEY (`ID_UF`)
+    REFERENCES `acidentes_db`.`UF` (`ID_UF`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_TIPO_PISTA1`
+    FOREIGN KEY (`ID_TIPO_PISTA`)
+    REFERENCES `acidentes_db`.`TIPO_PISTA` (`ID_TIPO_PISTA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_CLF_ACIDENTE1`
+    FOREIGN KEY (`ID_CLF_ACIDENTE`)
+    REFERENCES `acidentes_db`.`CLF_ACIDENTE` (`ID_CLF_ACIDENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_SENTIDO_VIA1`
+    FOREIGN KEY (`ID_SENTIDO_VIA`)
+    REFERENCES `acidentes_db`.`SENTIDO_VIA` (`ID_SENTIDO_VIA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ACIDENTE_TIPO_ACIDENTE1`
+    FOREIGN KEY (`ID_TIPO_ACIDENTE`)
+    REFERENCES `acidentes_db`.`TIPO_ACIDENTE` (`ID_TIPO_ACIDENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
